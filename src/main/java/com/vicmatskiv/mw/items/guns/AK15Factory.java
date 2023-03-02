@@ -4,7 +4,6 @@ import java.util.Arrays;
 
 import net.minecraft.item.Item;
 import net.minecraft.util.math.Vec3d;
-
 import org.lwjgl.opengl.GL11;
 
 import com.vicmatskiv.mw.Attachments;
