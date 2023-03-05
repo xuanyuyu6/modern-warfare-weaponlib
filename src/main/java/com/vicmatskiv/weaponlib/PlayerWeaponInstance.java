@@ -80,6 +80,7 @@ public class PlayerWeaponInstance extends PlayerItemInstance<WeaponState> implem
 
 	private int ammo;
 	private float recoil;
+	private float reloadingTime;
 	private int seriesShotCount;
 	private long lastFireTimestamp;
 	private boolean aimed;
@@ -260,6 +261,7 @@ public class PlayerWeaponInstance extends PlayerItemInstance<WeaponState> implem
 		ammo = buf.readInt();
 		aimed = buf.readBoolean();
 		recoil = buf.readFloat();
+		reloadingTime = buf.readFloat();
 		maxShots = buf.readInt();
 		zoom = buf.readFloat();
 		activeTextureIndex = buf.readByte();
@@ -278,6 +280,7 @@ public class PlayerWeaponInstance extends PlayerItemInstance<WeaponState> implem
 		buf.writeInt(ammo);
 		buf.writeBoolean(aimed);
 		buf.writeFloat(recoil);
+		buf.writeFloat(reloadingTime);
 		buf.writeInt(maxShots);
 		buf.writeFloat(zoom);
 		buf.writeByte(activeTextureIndex);
@@ -328,6 +331,7 @@ public class PlayerWeaponInstance extends PlayerItemInstance<WeaponState> implem
 		setAmmo(otherWeaponInstance.ammo);
 		setZoom(otherWeaponInstance.zoom);
 		setRecoil(otherWeaponInstance.recoil);
+		setReloadingTime(otherWeaponInstance.reloadingTime);
 		setSelectedAttachmentIndexes(otherWeaponInstance.selectedAttachmentIndexes);
 		setActiveAttachmentIds(otherWeaponInstance.activeAttachmentIds);
 		setActiveTextureIndex(otherWeaponInstance.activeTextureIndex);
@@ -352,7 +356,15 @@ public class PlayerWeaponInstance extends PlayerItemInstance<WeaponState> implem
 			markDirty();
 		}
 	}
-	
+
+	public float getReloadingTime() {return reloadingTime;}
+
+	public void setReloadingTime(float reloadingTime) {
+		if(reloadingTime != this.reloadingTime) {
+			this.reloadingTime = reloadingTime;
+			markDirty();
+		}
+	}
 	public boolean isDelayCompoundEnd() {
 		return isDelayCompoundEnd;
 	}

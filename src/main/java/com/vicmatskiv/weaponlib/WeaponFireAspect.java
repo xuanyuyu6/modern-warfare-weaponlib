@@ -335,7 +335,16 @@ public class WeaponFireAspect implements Aspect<WeaponState, PlayerWeaponInstanc
         player.rotationYaw = player.rotationYaw + recoilAmount * rotationYawFactor * 0.4f;
 		
         ClientValueRepo.recoilWoundY += recoilAmount * 0.7f;
-        
+
+        float reloadingTimeAmount = weaponInstance.getReloadingTime();
+        if(BalancePackManager.shouldChangeWeaponReloadingTime(weapon)) reloadingTimeAmount = (float) BalancePackManager.getNewWeaponReloadingTime(weapon);
+        reloadingTimeAmount *= BalancePackManager.getGlobalReloadingTimeMultiplier();
+        reloadingTimeAmount *= BalancePackManager.getGroupReloadingTimeMultiplier(weapon.getConfigurationGroup());
+        player.rotationPitch = player.rotationPitch - reloadingTimeAmount * 0.7f;
+
+        player.rotationYaw = player.rotationYaw + reloadingTimeAmount * rotationYawFactor * 0.4f;
+
+
 
         Boolean muzzleFlash = modContext.getConfigurationManager().getProjectiles().isMuzzleEffects();
         if(muzzleFlash == null || muzzleFlash) {

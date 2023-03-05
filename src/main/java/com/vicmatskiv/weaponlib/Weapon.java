@@ -106,7 +106,7 @@ AttachmentContainer, Reloadable, Inspectable, Modifiable, Updatable, IModernCraf
         List<String> textureNames = new ArrayList<>();
         int ammoCapacity = 0;
         float recoil = 1.0F;
-
+        float reloadingTime = 1.0F;
         private boolean hasFlashPedals = false;
         
         private String shootSound;
@@ -1329,6 +1329,14 @@ AttachmentContainer, Reloadable, Inspectable, Modifiable, Updatable, IModernCraf
             instance.setRecoil(recoil);
         }
     }
+    public void changeReloadingTime(EntityLivingBase player, float factor) {
+        PlayerWeaponInstance instance = modContext.getMainHeldWeapon();
+        if(instance != null) {
+            float reloadingTime = instance.getWeapon().builder.reloadingTime * factor;
+            logger.debug("Changing reloadingTime to {} for instance {}", reloadingTime, instance);
+            instance.setReloadingTime(reloadingTime);
+        }
+    }
 
     public Map<ItemAttachment<Weapon>, CompatibleAttachment<Weapon>> getCompatibleAttachments() {
         return builder.compatibleAttachments;
@@ -1489,6 +1497,7 @@ AttachmentContainer, Reloadable, Inspectable, Modifiable, Updatable, IModernCraf
         instance.setState(WeaponState.READY);
     
         instance.setRecoil(builder.recoil);
+        instance.setReloadingTime(builder.reloadingTime);
         instance.setMaxShots(builder.maxShots.get(0));
 
         for(CompatibleAttachment<Weapon> compatibleAttachment: ((Weapon) itemStack.getItem()).getCompatibleAttachments().values()) {
@@ -1654,6 +1663,8 @@ AttachmentContainer, Reloadable, Inspectable, Modifiable, Updatable, IModernCraf
         case GRIP:
             handler = (a, i) -> {
                 i.setRecoil(builder.recoil);
+                i.setReloadingTime(builder.reloadingTime);
+
             };
             break;
         default:
@@ -1668,6 +1679,9 @@ AttachmentContainer, Reloadable, Inspectable, Modifiable, Updatable, IModernCraf
 
     public float getRecoil() {
         return builder.recoil;
+    }
+    public float getReloadingTime() {
+        return builder.reloadingTime;
     }
 
     public ModContext getModContext() {
