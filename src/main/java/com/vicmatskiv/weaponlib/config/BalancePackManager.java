@@ -68,9 +68,9 @@ public class BalancePackManager {
 		private GunConfigurationGroup group;
 		private double damageMultiplier = 1.0;
 		private double recoilMultiplier = 1.0;
-		private double reloadingTimeMultiplier = 1.0;
+		private int reloadingTimeMultiplier = 1;
 		public GunCategoryBalanceConfiguration(GunConfigurationGroup group, double damageMultiplier,
-				double recoilMultiplier, double reloadingTimeMultiplier) {
+				double recoilMultiplier, int reloadingTimeMultiplier) {
 			this.group = group;
 			this.damageMultiplier = damageMultiplier;
 			this.recoilMultiplier = recoilMultiplier;
@@ -103,9 +103,9 @@ public class BalancePackManager {
 		}
 
 
-		public double getReloadingTimeMultiplier() {return reloadingTimeMultiplier;}
+		public int getReloadingTimeMultiplier() {return reloadingTimeMultiplier;}
 
-		public void setReloadingTimeMultiplier(double reloadingTimeMultiplier) {this.reloadingTimeMultiplier = reloadingTimeMultiplier;}
+		public void setReloadingTimeMultiplier(int reloadingTimeMultiplier) {this.reloadingTimeMultiplier = reloadingTimeMultiplier;}
 		public JsonObject toJSONObject() {
 			JsonObject category = new JsonObject();
 			category.addProperty("group", getGroup().toString());
@@ -121,7 +121,7 @@ public class BalancePackManager {
 					.valueOf(obj.get("group").getAsString().toUpperCase());
 			double damage = obj.has(DAMAGE_MULTIPLIER_KEY) ? obj.get(DAMAGE_MULTIPLIER_KEY).getAsDouble() : 1.0;
 			double recoil = obj.has(RECOIL_MULTIPLIER_KEY) ? obj.get(RECOIL_MULTIPLIER_KEY).getAsDouble() : 1.0;
-			double reloadingTime = obj.has(RELOADING_TIME_MULTIPLIER_KEY) ? obj.get(RELOADING_TIME_MULTIPLIER_KEY).getAsDouble() : 1.0;
+			int reloadingTime = (int) (obj.has(RELOADING_TIME_MULTIPLIER_KEY) ? obj.get(RELOADING_TIME_MULTIPLIER_KEY).getAsDouble() : 1.0);
 
 			return new GunCategoryBalanceConfiguration(configurationGroup, damage, recoil, reloadingTime);
 		}
@@ -137,7 +137,7 @@ public class BalancePackManager {
 
 		// Recoil as -1 means the recoil is not modified
 		private double recoil = -1;
-		private double reloadingTime = -1;
+		private int reloadingTime = -1;
 
 		private float fireRate = -1;
 
@@ -152,7 +152,7 @@ public class BalancePackManager {
 		private boolean fireModeAutoChanged = false;
 		private boolean autoFireEnabled = false;
 
-		public GunBalanceConfiguration(String weaponName, boolean enabled, double damage, double recoil, double reloadingTime) {
+		public GunBalanceConfiguration(String weaponName, boolean enabled, double damage, double recoil, int reloadingTime) {
 			this.weaponName = weaponName;
 			this.enabled = enabled;
 			this.damage = damage;
@@ -238,8 +238,8 @@ public class BalancePackManager {
 		public void setRecoil(double recoil) {
 			this.recoil = recoil;
 		}
-		public double getReloadingTime() {return reloadingTime;}
-		public void setReloadingTime(double reloadingTime) {
+		public int getReloadingTime() {return reloadingTime;}
+		public void setReloadingTime(int reloadingTime) {
 			this.reloadingTime = reloadingTime;
 		}
 		public void setFirerate(float firerate) {
@@ -276,7 +276,7 @@ public class BalancePackManager {
 			boolean enabled = obj.has("enabled") ? obj.get("enabled").getAsBoolean() : true;
 			double damage = obj.has("damage") ? obj.get("damage").getAsDouble() : -1;
 			double recoil = obj.has("recoil") ? obj.get("recoil").getAsDouble() : -1;
-			double reloadingTime = obj.has("reloadingTime") ? obj.get("reloadingTime").getAsDouble() : -1;
+			int reloadingTime = obj.has("reloadingTime") ? (int) obj.get("reloadingTime").getAsDouble() : -1;
 			GunBalanceConfiguration gbc = new GunBalanceConfiguration(name, enabled, damage, recoil, reloadingTime);
 
 			if (obj.has(FIRE_RATE_MODIFIER)) {
@@ -301,14 +301,14 @@ public class BalancePackManager {
 
 		private double headshotMultiplier = 2.5;
 		private double globalRecoilMultiplier = 1.0;
-		private double globalReloadingTimeMultiplier = 1.0;
+		private int globalReloadingTimeMultiplier = 1;
 		private double globalDamageMultiplier = 1.0;
 		private String fileName;
 
 		private HashMap<String, GunBalanceConfiguration> gunConfigurations = new HashMap<>();
 		private HashMap<GunConfigurationGroup, GunCategoryBalanceConfiguration> gunCategoryConfigurations = new HashMap<>();
 
-		public BalancePack(String name, String version, double headshotMultiplier, double globalRecoilMultiplier, double globalReloadingTimeMultiplier,
+		public BalancePack(String name, String version, double headshotMultiplier, double globalRecoilMultiplier, int globalReloadingTimeMultiplier,
 				double globalDamageMultiplier) {
 			this.name = name;
 			this.version = version;
@@ -342,13 +342,14 @@ public class BalancePackManager {
 			String packName = jsonObject.get(PACK_NAME_KEY).getAsString();
 			String packVersion = jsonObject.get(PACK_VERSION_KEY).getAsString();
 
-			double globalRecoil, globalDamage, headshotMultiplier = 0, globalreloadingTime = 2.5;
+			double globalRecoil, globalDamage, headshotMultiplier = 2.5;
+			int	globalreloadingTime = 2;
 			if (jsonObject.has(GLOBAL_PARAMETERS_KEY)) {
 				JsonObject globalParameters = jsonObject.get(GLOBAL_PARAMETERS_KEY).getAsJsonObject();
 
 				globalDamage = globalParameters.get(DAMAGE_MULTIPLIER_KEY).getAsDouble();
 				globalRecoil = globalParameters.get(RECOIL_MULTIPLIER_KEY).getAsDouble();
-				globalreloadingTime = globalParameters.get(RELOADING_TIME_MULTIPLIER_KEY).getAsDouble();
+				globalreloadingTime = (int) globalParameters.get(RELOADING_TIME_MULTIPLIER_KEY).getAsDouble();
 
 				if (globalParameters.has(HEADSHOT_MULTIPLIER_KEY)) {
 					headshotMultiplier = globalParameters.get(HEADSHOT_MULTIPLIER_KEY).getAsDouble();
@@ -357,7 +358,7 @@ public class BalancePackManager {
 			} else {
 				globalRecoil = 1.0;
 				globalDamage = 1.0;
-				globalreloadingTime = 1.0;
+				globalreloadingTime = 1;
 
 			}
 
@@ -448,19 +449,19 @@ public class BalancePackManager {
 			return globalRecoilMultiplier;
 		}
 
-		public void setGlobalRecoilMultiplier(double globalRecoilMultiplier) {
+		public void setGlobalRecoilMultiplier(int globalRecoilMultiplier) {
 			this.globalRecoilMultiplier = globalRecoilMultiplier;
 		}
-		public double getGlobalReloadingTimeMultiplier() {return globalRecoilMultiplier;}
+		public int getGlobalReloadingTimeMultiplier() {return globalReloadingTimeMultiplier;}
 
-		public void setGlobalReloadingTimeMultiplier(double globalReloadingTimeMultiplier) {
+		public void setGlobalReloadingTimeMultiplier(int globalReloadingTimeMultiplier) {
 			this.globalReloadingTimeMultiplier = globalReloadingTimeMultiplier;
 		}
 		public double getGlobalDamageMultiplier() {
 			return globalDamageMultiplier;
 		}
 
-		public void setGlobalDamageMultiplier(double globalDamageMultiplier) {
+		public void setGlobalDamageMultiplier(int globalDamageMultiplier) {
 			this.globalDamageMultiplier = globalDamageMultiplier;
 		}
 
@@ -764,10 +765,10 @@ public class BalancePackManager {
 	}
 
 	public static void createDefaultBalancePack() {
-		BalancePack defaultPack = new BalancePack("default", "1.0", 2.5, 1.0, 1.0, 1.0);
-		defaultPack.addWeaponConfig(new GunBalanceConfiguration("exampleWeapon", true, 8.0, 1.0, 1.0));
+		BalancePack defaultPack = new BalancePack("default", "1.0", 2.5, 1.0, 1, 1.0);
+		defaultPack.addWeaponConfig(new GunBalanceConfiguration("exampleWeapon", true, 8.0, 1.0, 1));
 		for (GunConfigurationGroup i : GunConfigurationGroup.values()) {
-			defaultPack.addBalancingCategory(new GunCategoryBalanceConfiguration(i, 1.0, 1.0, 1.0));
+			defaultPack.addBalancingCategory(new GunCategoryBalanceConfiguration(i, 1.0, 1.0, 1));
 		}
 		writeJSONToFile(defaultPack.toJSONObject(), new File("balancepacks/default_pack.json"));
 	}
@@ -871,7 +872,7 @@ public class BalancePackManager {
 			return false;
 		return true;
 	}
-	public static double getNewWeaponReloadingTime(Weapon weapon) {
+	public static int getNewWeaponReloadingTime(Weapon weapon) {
 		if (!hasActiveBalancePack() || !balancePackAddressesWeapon(weapon))
 			return -1;
 		return getActiveBalancePack().getWeaponBalancing(weapon.getName()).getReloadingTime();
@@ -887,9 +888,9 @@ public class BalancePackManager {
 			return 1.0;
 		return getActiveBalancePack().getCategoryBalancing(group).getRecoilMultiplier();
 	}
-	public static double getGroupReloadingTimeMultiplier(GunConfigurationGroup group) {
+	public static int getGroupReloadingTimeMultiplier(GunConfigurationGroup group) {
 		if (!hasActiveBalancePack() || !balancePackAddressesGroup(group))
-			return 1.0;
+			return 1;
 		return getActiveBalancePack().getCategoryBalancing(group).getReloadingTimeMultiplier();
 	}
 
@@ -904,9 +905,9 @@ public class BalancePackManager {
 			return 1.0;
 		return getActiveBalancePack().getGlobalRecoilMultiplier();
 	}
-	public static double getGlobalReloadingTimeMultiplier() {
+	public static int getGlobalReloadingTimeMultiplier() {
 		if (!hasActiveBalancePack())
-			return 1.0;
+			return 1;
 		return getActiveBalancePack().getGlobalReloadingTimeMultiplier();
 	}
 	public static double getNetGunDamage(Weapon weapon) {

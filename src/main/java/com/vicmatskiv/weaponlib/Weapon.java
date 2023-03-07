@@ -106,7 +106,7 @@ AttachmentContainer, Reloadable, Inspectable, Modifiable, Updatable, IModernCraf
         List<String> textureNames = new ArrayList<>();
         int ammoCapacity = 0;
         float recoil = 1.0F;
-        float reloadingTime = 1.0F;
+        int reloadingTime = 1;
         private boolean hasFlashPedals = false;
         
         private String shootSound;
@@ -327,8 +327,8 @@ AttachmentContainer, Reloadable, Inspectable, Modifiable, Updatable, IModernCraf
             return this;
         }
 
-        public Builder withReloadingTime(long reloadingTime) {
-            this.reloadingTimeout = reloadingTime;
+        public Builder withReloadingTime(int reloadingTime) {
+            this.reloadingTime = reloadingTime;
             return this;
         }
 
@@ -1680,7 +1680,7 @@ AttachmentContainer, Reloadable, Inspectable, Modifiable, Updatable, IModernCraf
     public float getRecoil() {
         return builder.recoil;
     }
-    public float getReloadingTime() {
+    public int getReloadingTime() {
         return builder.reloadingTime;
     }
 

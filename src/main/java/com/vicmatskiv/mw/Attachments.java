@@ -17374,7 +17374,7 @@ public class Attachments {
                 .withCreativeTab(ModernWarfareMod.AttachmentsTab).withModel(new com.vicmatskiv.mw.models.M1928Grip(), "m1a1thompson.png")
                 .withApply((a, i) -> {
                     i.setRecoil(i.getWeapon().getRecoil() * 0.6f);
-                    i.setReloadingTime(i.getWeapon().getReloadingTime() * 0.6f);
+                    i.setReloadingTime(i.getWeapon().getReloadingTime() * 1);
 
                 }).withFirstPersonModelPositioning((model, itemStack) -> {
                     if (model instanceof com.vicmatskiv.mw.models.M1928Grip) {
@@ -17473,7 +17473,7 @@ public class Attachments {
                     	new CraftingEntry(Ores.GunmetalIngot, 2))
                 .withApply((a, i) -> {
                     i.setRecoil(i.getWeapon().getRecoil() * 0.6f);
-                    i.setReloadingTime(i.getWeapon().getReloadingTime() * 0.6f);
+                    i.setReloadingTime(i.getWeapon().getReloadingTime() * 1);
 
 
                 }).withFirstPersonModelPositioning((model, itemStack) -> {
@@ -17525,7 +17525,7 @@ public class Attachments {
                     	new CraftingEntry(Ores.GunmetalIngot, 3))
                 .withApply((a, i) -> {
                     i.setRecoil(i.getWeapon().getRecoil() * 0.6f);
-                    i.setReloadingTime(i.getWeapon().getReloadingTime() * 0.6f);
+                    i.setReloadingTime(i.getWeapon().getReloadingTime() * 1);
 
                 }).withFirstPersonModelPositioning((model, itemStack) -> {
                     if (model instanceof com.vicmatskiv.mw.models.JunoGrip) {
@@ -17610,7 +17610,7 @@ public class Attachments {
                     	new CraftingEntry(Ores.GunmetalIngot, 3))
                 .withApply((a, i) -> {
                     i.setRecoil(i.getWeapon().getRecoil() * 0.6f);
-                    i.setReloadingTime(i.getWeapon().getReloadingTime() * 0.6f);
+                    i.setReloadingTime(i.getWeapon().getReloadingTime() * 1);
 
                 }).withFirstPersonModelPositioning((model, itemStack) -> {
                     if (model instanceof com.vicmatskiv.mw.models.VP70stock) {
@@ -17668,7 +17668,7 @@ public class Attachments {
                     	new CraftingEntry(Ores.GunmetalIngot, 2))
                 .withApply((a, i) -> {
                     i.setRecoil(i.getWeapon().getRecoil() * 0.6f);
-                    i.setReloadingTime(i.getWeapon().getReloadingTime() * 0.6f);
+                    i.setReloadingTime(i.getWeapon().getReloadingTime() * 1);
 
                 })
                 .withFirstPersonModelPositioning((model, itemStack) -> {
@@ -17732,7 +17732,7 @@ public class Attachments {
                     	new CraftingEntry(Ores.GunmetalIngot, 2))
                 .withApply((a, i) -> {
                     i.setRecoil(i.getWeapon().getRecoil() * 0.6f);
-                    i.setReloadingTime(i.getWeapon().getReloadingTime() * 0.6f);
+                    i.setReloadingTime(i.getWeapon().getReloadingTime() * 1);
 
                 })
                 // .withApply((a, weapon, player) ->
@@ -17800,7 +17800,7 @@ public class Attachments {
                     	new CraftingEntry(Ores.GunmetalIngot, 2))
                 .withApply((a, i) -> {
                     i.setRecoil(i.getWeapon().getRecoil() * 0.6f);
-                    i.setReloadingTime(i.getWeapon().getReloadingTime() * 0.6f);
+                    i.setReloadingTime(i.getWeapon().getReloadingTime() * 1);
 
                 })
                 .withFirstPersonModelPositioning((model, itemStack) -> {
@@ -17897,7 +17897,7 @@ public class Attachments {
                 .withModel(new com.vicmatskiv.mw.models.AUGGrip(), "gun.png")
                 .withApply((a, i) -> {
                     i.setRecoil(i.getWeapon().getRecoil() * 0.6f);
-                    i.setReloadingTime(i.getWeapon().getReloadingTime() * 0.6f);
+                    i.setReloadingTime(i.getWeapon().getReloadingTime() * 1);
 
                 }).withFirstPersonModelPositioning((model, itemStack) -> {
                     if (model instanceof com.vicmatskiv.mw.models.AUGGrip) {
